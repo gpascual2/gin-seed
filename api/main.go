@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"bitbucket.org/gpascual2/gin-seed/api/config"
+	"bitbucket.org/gpascual2/gin-seed/api/server"
 )
 
 var log = logrus.New()
@@ -48,5 +49,8 @@ func main() {
 	log.WithFields(logrus.Fields{
 		"port": c.Get("server.port"),
 	}).Info("HTTP Port configed")
+
+	// Initialize and run server
+	server.Init(log)
 
 }
