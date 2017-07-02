@@ -1,1 +1,3 @@
 *.exe
+api/vendor
+!api/vendor/vendor.json

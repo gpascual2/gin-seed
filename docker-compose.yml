@@ -7,8 +7,8 @@ services:
       - PORT=8080
       - GIN_MODE=debug
     volumes:
-      - .:/go/src/project
-    working_dir: /go/src/project/api
+      - .:/go/src/bitbucket.org/gpascual2/gin-seed
+    working_dir: /go/src/bitbucket.org/gpascual2/gin-seed/api
     command: go run main.go
     ports:
       - "8080:8080"

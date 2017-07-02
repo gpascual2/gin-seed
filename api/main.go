@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+
+	"bitbucket.org/gpascual2/gin-seed/api/config"
 )
 
 func main() {
@@ -15,4 +17,8 @@ func main() {
 	}
 	flag.Parse()
 	fmt.Println("Environment: ", env)
+	config.Init(env)
+
+	c := config.GetConfig()
+	fmt.Printf("HTTP Port: %v\n", c.Get("server.port"))
 }
