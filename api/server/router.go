@@ -34,5 +34,16 @@ func NewRouter(config *viper.Viper, logger *logrus.Logger) *gin.Engine {
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})
+
+	router.LoadHTMLGlob("./templates/*")
+	router.Static("/templates", "./templates")
+	// root route
+	router.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", gin.H{})
+	})
+	// 404 handler
+	router.NoRoute(func(c *gin.Context) {
+		c.HTML(404, "404.html", gin.H{})
+	})
 	return router
 }

@@ -6,3 +6,9 @@ env:
 server:
   mode: "release"
   port: 80
+
+# CORS config
+cors:
+  enable: true
+  allow_origin:
+    - "http://localhost"
