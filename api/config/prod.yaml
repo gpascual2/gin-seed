@@ -1,0 +1,7 @@
+# Environmental configs
+env:
+  log_level: "info"
+
+# Server config
+server:
+  port: 80
