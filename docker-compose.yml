@@ -1,0 +1,14 @@
+version: "3.1"
+
+services:
+  app:
+    image: golang:1.8.3-alpine
+    environment: 
+      - PORT=8080
+      - GIN_MODE=debug
+    volumes:
+      - .:/go/src/project
+    working_dir: /go/src/project/api
+    command: go run main.go
+    ports:
+      - "8080:8080"
