@@ -11,11 +11,11 @@ import (
 	"bitbucket.org/gpascual2/gin-seed/api/server"
 )
 
-var log = logrus.New()
+var logger = logrus.New()
 
 func init() {
 	// Config logger
-	log.Formatter = new(logrus.TextFormatter)
+	logger.Formatter = new(logrus.TextFormatter)
 
 }
 
@@ -29,28 +29,28 @@ func main() {
 	}
 	flag.Parse()
 	fmt.Println("Environment: ", env)
-	config.Init(env, log)
+	config.Init(env, logger)
 
 	// Read config
-	c := config.GetConfig()
+	cfg := config.GetConfig()
 
 	// Set configed log level
-	cLogLvl, err := logrus.ParseLevel(c.GetString("env.log_level"))
+	cLogLvl, err := logrus.ParseLevel(cfg.GetString("env.log_level"))
 	if err != nil {
 		cLogLvl = logrus.WarnLevel // Default to Warning
 	}
-	log.Level = cLogLvl
+	logger.Level = cLogLvl
 
 	// Log initial config
-	log.WithFields(logrus.Fields{"env": env}).Info("Environment set")
-	log.WithFields(logrus.Fields{"log_level": c.GetString("env.log_level")}).Info("Log level set")
+	logger.WithFields(logrus.Fields{"env": env}).Info("Environment set")
+	logger.WithFields(logrus.Fields{"log_level": cfg.GetString("env.log_level")}).Info("Log level set")
 
 	// HTTP Port to use
-	log.WithFields(logrus.Fields{
-		"port": c.Get("server.port"),
+	logger.WithFields(logrus.Fields{
+		"port": cfg.Get("server.port"),
 	}).Info("HTTP Port configed")
 
 	// Initialize and run server
-	server.Init(log)
+	server.Init(cfg, logger)
 
 }

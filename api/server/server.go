@@ -4,18 +4,15 @@ import (
 	"runtime"
 
 	"github.com/sirupsen/logrus"
-
-	"bitbucket.org/gpascual2/gin-seed/api/config"
+	"github.com/spf13/viper"
 )
 
 // Init the server config for Gin
-func Init(logger *logrus.Logger) {
-	config := config.GetConfig()
-
+func Init(config *viper.Viper, logger *logrus.Logger) {
 	// Use all cpu cores
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	// Create router and listen on the configed port
-	r := NewRouter(config.GetString("server.mode"), logger)
+	r := NewRouter(config, logger)
 	r.Run(":" + config.GetString("server.port"))
 }
