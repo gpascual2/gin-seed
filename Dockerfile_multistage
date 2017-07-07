@@ -1,0 +1,15 @@
+FROM golang:1.8.3-alpine AS apiserver
+WORKDIR /go/src/bitbucket.org/gpascual2/gin-seed/api
+ADD ./api/. /go/src/bitbucket.org/gpascual2/gin-seed/api
+RUN GOOS=linux go build -o api .
+
+FROM alpine:latest
+ENV API_PORT=8080
+RUN apk --no-cache add ca-certificates
+WORKDIR /root
+COPY --from=apiserver /go/src/bitbucket.org/gpascual2/gin-seed/api/api .
+COPY --from=apiserver /go/src/bitbucket.org/gpascual2/gin-seed/api/config/*.yaml ./config/
+COPY --from=apiserver /go/src/bitbucket.org/gpascual2/gin-seed/api/templates ./templates
+EXPOSE $API_PORT
+CMD ["./api"]
+CMD ["go", "run", "main.go","-e","prod"]
